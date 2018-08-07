@@ -1,0 +1,24 @@
+{
+  "name": "book-list-server",
+  "version": "1.0.0",
+  "description": "Book Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamAquamarine/book-list-server.git"
+  },
+  "author": "Alex, Sharon, and Connor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeamAquamarine/book-list-server/issues"
+  },
+  "homepage": "https://github.com/TeamAquamarine/book-list-server#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pg": "^7.4.3"
+  }
+}
