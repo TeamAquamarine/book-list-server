@@ -21,6 +21,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+
 app.get('/api/v1/books', (req, res) => {
   let SQL = `SELECT book_id, title, author, img_url FROM books;`
 
@@ -52,5 +55,10 @@ app.post('/api/v1/books', (req, res) => {
   client.query(SQL, values)
   .catch(console.error);
 });
+
+app.get('*', (req, res) => {
+  res.status(404);
+  res.send('404: File not found')
+})
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
