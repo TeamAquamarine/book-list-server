@@ -16,7 +16,16 @@ app.get('/api/v1/books', (req, res) => {
 
   client.query(SQL)
   .then(results => res.send(results.rows))
-  .catch(console.error)
+  .catch(console.error);
 });
+
+app.get('/api/v1/books/:id', (req, res) => {
+  let SQL = `SELECT * FROM books WHERE book_id = $1`
+  let values = [req.params.id];
+
+  client.query(SQL, values)
+  .then(results => res.send(results.rows))
+  .catch(console.error);
+})
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
