@@ -11,5 +11,12 @@ const client = new pg.Client(connectionString);
 client.connect();
 client.on('error', err => console.log(err));
 
-app.get('/test', (req, res ) => res.send('hello world!!!') )
+app.get('/api/v1/books', (req, res) => {
+  let SQL = `SELECT book_id, title, author, img_url FROM books;`
+
+  client.query(SQL)
+  .then(results => res.send(results.rows))
+  .catch(console.error)
+});
+
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
