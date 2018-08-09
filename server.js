@@ -42,7 +42,7 @@ app.get('/api/v1/books/:id', (req, res) => {
   .catch(console.error);
 })
 
-app.post('/api/v1/books', (req, res) => {
+app.post('/api/v1/books/add', (req, res) => {
   let SQL = `INSERT INTO books(title, author, isbn, img_url, description) values($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`;
 
   let values = [
@@ -54,6 +54,7 @@ app.post('/api/v1/books', (req, res) => {
   ]
 
   client.query(SQL, values)
+  .then(results => res.status(200).send(results))
   .catch(console.error);
 });
 
