@@ -7,7 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //connections
-const connectionString = `postgres://sharon:@localhost:5432/books_app`;
+// const connectionString = `postgres://sharon:@localhost:5432/books_app`;
+const connectionString = 'postgres://ccross:12345@localhost:5432/books_app';
 const client = new pg.Client(connectionString);
 client.connect();
 client.on('error', err => console.log(err));
@@ -41,7 +42,7 @@ app.get('/api/v1/books/:id', (req, res) => {
   .catch(console.error);
 })
 
-app.post('/api/v1/books', (req, res) => {
+app.post('/api/v1/books/add', (req, res) => {
   let SQL = `INSERT INTO books(title, author, isbn, img_url, description) values($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING;`;
 
   let values = [
@@ -53,6 +54,7 @@ app.post('/api/v1/books', (req, res) => {
   ]
 
   client.query(SQL, values)
+  .then(results => res.status(200).send(results))
   .catch(console.error);
 });
 
