@@ -7,7 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //connections
-const connectionString = `postgres://sharon:@localhost:5432/books_app`;
+// const connectionString = `postgres://sharon:@localhost:5432/books_app`;
+const connectionString = 'postgres://ccross:12345@localhost:5432/books_app';
 const client = new pg.Client(connectionString);
 client.connect();
 client.on('error', err => console.log(err));
