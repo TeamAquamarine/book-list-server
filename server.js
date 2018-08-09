@@ -58,6 +58,15 @@ app.post('/api/v1/books/add', (req, res) => {
   .catch(console.error);
 });
 
+app.delete('/api/v1/books/delete/:id', (req, res) => {
+  let SQL = `DELETE FROM books WHERE book_id = $1;`;
+  let values = [req.params.id];
+
+  client.query(SQL, values)
+  .then(results => res.status(200).send(results))
+  .catch(console.error);
+})
+
 app.get('*', (req, res) => {
   res.status(404);
   res.send('404: File not found')
