@@ -14,7 +14,7 @@ client.connect();
 client.on('error', err => console.log(err));
 
 //middleware
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Credentials", true);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -23,14 +23,14 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.json());
-app.use(express.urlencoded({extended : true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/v1/books', (req, res) => {
   let SQL = `SELECT book_id, title, author, img_url FROM books;`
 
   client.query(SQL)
-  .then(results => res.send(results.rows))
-  .catch(console.error);
+    .then(results => res.send(results.rows))
+    .catch(console.error);
 });
 
 app.get('/api/v1/books/:id', (req, res) => {
@@ -38,8 +38,8 @@ app.get('/api/v1/books/:id', (req, res) => {
   let values = [req.params.id];
 
   client.query(SQL, values)
-  .then(results => res.send(results.rows))
-  .catch(console.error);
+    .then(results => res.send(results.rows))
+    .catch(console.error);
 })
 
 app.post('/api/v1/books/add', (req, res) => {
@@ -54,8 +54,8 @@ app.post('/api/v1/books/add', (req, res) => {
   ]
 
   client.query(SQL, values)
-  .then(results => res.status(200).send(results))
-  .catch(console.error);
+    .then(results => res.status(200).send(results))
+    .catch(console.error);
 });
 
 app.delete('/api/v1/books/delete/:id', (req, res) => {
@@ -63,17 +63,18 @@ app.delete('/api/v1/books/delete/:id', (req, res) => {
   let values = [req.params.id];
 
   client.query(SQL, values)
-  .then(results => res.status(200).send(results))
-  .catch(console.error);
+    .then(results => res.status(200).send(results))
+    .catch(console.error);
 })
 
 app.put('/api/v1/books/update/:id', (req, res) => {
+  console.log(req.params.id);
   let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, img_url=$4, description=$5 WHERE book_id=$6;`;
-  let values = [req.body.title, req.body.author, req.body.isbn, req.body.img_url, req.body.description, req.params.id];
-  
+  let values = [req.body.title, req.body.author, req.body.isbn, req.body.img_url, req.body.description, parseInt(req.params.id)];
+
   client.query(SQL, values)
-  .then(results => res.status(200).send(results))
-  .catch(console.error);
+    .then(results => res.status(200).send(results))
+    .catch(console.error);
 
 })
 
