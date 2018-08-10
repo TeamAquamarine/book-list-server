@@ -67,6 +67,16 @@ app.delete('/api/v1/books/delete/:id', (req, res) => {
   .catch(console.error);
 })
 
+app.put('/api/v1/books/update/:id', (req, res) => {
+  let SQL = `UPDATE books SET title=$1, author=$2, isbn=$3, img_url=$4, description=$5 WHERE book_id=$6;`;
+  let values = [req.body.title, req.body.author, req.body.isbn, req.body.img_url, req.body.description, req.params.id];
+  
+  client.query(SQL, values)
+  .then(results => res.status(200).send(results))
+  .catch(console.error);
+
+})
+
 app.get('*', (req, res) => {
   res.status(404);
   res.send('404: File not found')
